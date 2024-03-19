@@ -26,12 +26,10 @@ class MainActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.editTextPassword)
         loginButton = findViewById(R.id.buttonLogin)
 
-        // Adicionando usuários iniciais à lista
         usersList.add(Pair("user", "1234"))
 
         loginButton.isEnabled = false
 
-        // Adicionando listener para verificar se ambos os campos estão preenchidos
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
