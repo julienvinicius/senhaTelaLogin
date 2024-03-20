@@ -22,6 +22,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initializeViews()
+
+        setupTextWatchers()
+
+        setupLoginButton()
+    }
+
+    private fun initializeViews() {
         usernameEditText = findViewById(R.id.editTextUsername)
         passwordEditText = findViewById(R.id.editTextPassword)
         loginButton = findViewById(R.id.buttonLogin)
@@ -29,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         usersList.add(Pair("user", "1234"))
 
         loginButton.isEnabled = false
+    }
 
+    private fun setupTextWatchers() {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -44,7 +54,9 @@ class MainActivity : AppCompatActivity() {
 
         usernameEditText.addTextChangedListener(textWatcher)
         passwordEditText.addTextChangedListener(textWatcher)
+    }
 
+    private fun setupLoginButton() {
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
@@ -58,7 +70,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isValidUser(username: String, password: String): Boolean {
-        // Verifica se o par de chave-valor (usuário, senha) existe na lista de usuários
         return usersList.any { it.first == username && it.second == password }
     }
 
@@ -68,14 +79,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showErrorDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Erro de Login")
-        builder.setMessage("Nome de usuário ou senha incorretos.")
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
+        AlertDialog.Builder(this).apply {
+            setTitle("Erro de Login")
+            setMessage("Nome de usuário ou senha incorretos.")
+            setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+            create()
+            show()
         }
-        val dialog = builder.create()
-        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -85,7 +95,6 @@ class MainActivity : AppCompatActivity() {
             val newPassword = data?.getStringExtra("newPassword")
             newUser?.let { username ->
                 newPassword?.let { password ->
-                    // Adiciona o novo usuário à lista
                     usersList.add(Pair(username, password))
                 }
             }

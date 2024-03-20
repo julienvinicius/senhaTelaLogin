@@ -1,13 +1,12 @@
 package com.example.myintents
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 
 class SecondActivity : AppCompatActivity() {
 
@@ -19,10 +18,19 @@ class SecondActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
+        initializeViews()
+        setupTextWatchers()
+        setupSaveButton()
+    }
+
+    private fun initializeViews() {
         newUsernameEditText = findViewById(R.id.editTextNewUsername)
         newPasswordEditText = findViewById(R.id.editTextNewPassword)
         saveButton = findViewById(R.id.buttonSave)
+        saveButton.isEnabled = false
+    }
 
+    private fun setupTextWatchers() {
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -37,7 +45,9 @@ class SecondActivity : AppCompatActivity() {
 
         newUsernameEditText.addTextChangedListener(textWatcher)
         newPasswordEditText.addTextChangedListener(textWatcher)
+    }
 
+    private fun setupSaveButton() {
         saveButton.setOnClickListener {
             val newUsername = newUsernameEditText.text.toString().trim()
             val newPassword = newPasswordEditText.text.toString().trim()
@@ -48,72 +58,5 @@ class SecondActivity : AppCompatActivity() {
             setResult(RESULT_OK, resultIntent)
             finish()
         }
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
